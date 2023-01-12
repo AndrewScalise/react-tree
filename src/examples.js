@@ -169,3 +169,22 @@ const App = () => {
 }
 
 export default App;
+
+const removeNode = (nodeId) => {
+    let updatedData = {...treeData};
+    let removed = false;
+    const traverse = (node) => {
+      if (node.id === nodeId) {
+          removed = true;
+          return null;
+      } else if (node.children && !removed) {
+          node.children = node.children.map(child => traverse(child)).filter(child => child !== null);
+      }
+      return node;
+    }
+    updatedData = traverse(updatedData);
+    if(removed){
+      setTreeData(updatedData);
+    }
+  }
+  
